@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import data from "./data";
 
-function App() {
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [text, setText] = useState([]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (count > 0) {
+      setText(data.slice(0, parseInt(count)));
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Tired of Boring Lorem Ipsum?</h1>
+      <form onSubmit={handleSubmit}>
+        <p>Paragraphs:</p>
+        <input onChange={(e) => setCount(e.target.value)} type="number" />
+        <button>Generate</button>
+      </form>
+      <div>
+        {text.map((item, index) => {
+          return <p key={index}>{item}</p>;
+        })}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
